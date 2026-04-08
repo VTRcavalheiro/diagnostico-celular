@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Diagnóstico do Celular</title>
 
+  <!-- CSS correto -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,42 +13,48 @@
 <header>
   <h1>Diagnóstico do Celular</h1>
   <p>Siga os testes passo a passo</p>
+
+  <!-- Barra de progresso -->
+  <div id="progressContainer">
+    <div id="progressBar"></div>
+  </div>
 </header>
 
 <main>
 
-  <!-- TESTE 1 - TOUCH -->
-  <section class="card active" id="test-touch">
+  <!-- TESTE TOUCH -->
+  <section class="card" id="test-touch">
     <h2>🖐️ Teste de Touch Screen</h2>
-    <p>Deslize o dedo por todos os quadrados</p>
-
+    <p>Passe o dedo por todos os quadrados</p>
     <div id="touchGrid"></div>
-
-    <p id="touchStatus">
-      Restantes: <strong><span id="remaining">0</span></strong>
-    </p>
+    <p id="touchInfo"></p>
   </section>
 
-  <!-- TESTE 2 - VIBRAÇÃO -->
+  <!-- TESTE VIBRAÇÃO -->
   <section class="card hidden" id="test-vibration">
     <h2>📳 Teste de Vibração</h2>
-    <button id="vibrateBtn">Iniciar teste de vibração</button>
-    <p id="vibrationStatus">Aguardando ação...</p>
+    <button id="vibrateBtn">Testar Vibração</button>
+    <button id="confirmVibration" class="hidden">✅ Vibrou</button>
+    <p id="vibrationInfo"></p>
   </section>
 
-  <!-- TESTE 3 - ORIENTAÇÃO -->
+  <!-- TESTE ORIENTAÇÃO -->
   <section class="card hidden" id="test-orientation">
     <h2>🧭 Teste de Orientação</h2>
-    <button id="orientationBtn">Ativar sensores</button>
-    <p id="orientationInfo">Aguardando movimento...</p>
+    <p>Mova o celular</p>
+    <button id="orientationBtn">Ativar Sensores</button>
+    <p id="orientationInfo"></p>
   </section>
 
 </main>
 
 <footer>
-  <p>Diagnóstico Web Guiado</p>
+  <p>Ferramenta Web de Diagnóstico</p>
 </footer>
 
+<!-- JS correto -->
 <script src="app.js"></script>
+
 </body>
 </html>
+``
