@@ -28,6 +28,7 @@ main {
 button {
   width: 100%;
   padding: 16px;
+  margin-top: 10px;
   font-size: 16px;
   background: #22c55e;
   border: none;
@@ -39,7 +40,7 @@ button {
   display: none;
 }
 
-/* FULLSCREEN TOUCH */
+/* TOUCH FULLSCREEN */
 #touch-fullscreen {
   position: fixed;
   inset: 0;
