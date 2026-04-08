@@ -1,37 +1,40 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ===== PROGRESSO ===== */
-  const progressBar = document.getElementById("progressBar");
-  function setProgress(percent) {
-    progressBar.style.width = percent + "%";
+  let step = 1;
+
+  const progressBar = document.getElementById("progress-bar");
+
+  function updateProgress() {
+    progressBar.style.width = `${(step - 1) * 33}%`;
   }
 
-  /* =============================
-     TESTE 1 — TOUCH
-  ==============================*/
-  const grid = document.getElementById("touchGrid");
-  const touchInfo = document.getElementById("touchInfo");
+  function showStep(id) {
+    document.querySelectorAll(".card").forEach(s => s.classList.add("hidden"));
+    document.getElementById(id).classList.remove("hidden");
+    updateProgress();
+  }
 
-  let totalCells = 16;
-  let touchedCells = 0;
+  /* ==================== STEP 1: TOUCH ==================== */
 
-  for (let i = 0; i < totalCells; i++) {
+  const grid = document.getElementById("touch-grid");
+  const infoTouch = document.getElementById("touch-info");
+
+  const TOTAL = 16;
+  let count = 0;
+
+  for (let i = 0; i < TOTAL; i++) {
     const cell = document.createElement("div");
     cell.className = "touch-cell";
 
     cell.addEventListener("pointerdown", () => {
       if (!cell.classList.contains("done")) {
         cell.classList.add("done");
-        touchedCells++;
-        touchInfo.textContent =
-          `Restantes: ${totalCells - touchedCells}`;
+        count++;
+        infoTouch.textContent = `Restantes: ${TOTAL - count}`;
 
-        if (touchedCells === totalCells) {
-          setProgress(33);
-          setTimeout(() => {
-            document.getElementById("test-touch").classList.add("hidden");
-            document.getElementById("test-vibration").classList.remove("hidden");
-          }, 500);
+        if (count === TOTAL) {
+          step = 2;
+          showStep("step-vibration");
         }
       }
     });
@@ -39,49 +42,42 @@ document.addEventListener("DOMContentLoaded", () => {
     grid.appendChild(cell);
   }
 
-  touchInfo.textContent = `Restantes: ${totalCells}`;
+  infoTouch.textContent = `Restantes: ${TOTAL}`;
 
-  /* =============================
-     TESTE 2 — VIBRAÇÃO
-  ==============================*/
-  const vibrateBtn = document.getElementById("vibrateBtn");
-  const confirmVibration = document.getElementById("confirmVibration");
-  const vibrationInfo = document.getElementById("vibrationInfo");
+  /* ==================== STEP 2: VIBRAÇÃO ==================== */
 
-  vibrateBtn.addEventListener("click", () => {
+  const btnVibrate = document.getElementById("btn-vibrate");
+  const btnConfirm = document.getElementById("btn-confirm-vibration");
+  const infoVibration = document.getElementById("vibration-info");
+
+  btnVibrate.addEventListener("click", () => {
     if ("vibrate" in navigator) {
       navigator.vibrate([200, 100, 200]);
-      vibrationInfo.textContent =
-        "Se o aparelho vibrou, confirme abaixo.";
-      confirmVibration.classList.remove("hidden");
+      infoVibration.textContent = "Se o aparelho vibrou, confirme abaixo.";
+      btnConfirm.classList.remove("hidden");
     } else {
-      vibrationInfo.textContent =
-        "Vibração não suportada neste dispositivo.";
+      infoVibration.textContent = "Vibração não suportada.";
     }
   });
 
-  confirmVibration.addEventListener("click", () => {
-    setProgress(66);
-    document.getElementById("test-vibration").classList.add("hidden");
-    document.getElementById("test-orientation").classList.remove("hidden");
+  btnConfirm.addEventListener("click", () => {
+    step = 3;
+    showStep("step-orientation");
   });
 
-  /* =============================
-     TESTE 3 — ORIENTAÇÃO
-  ==============================*/
-  const orientationBtn = document.getElementById("orientationBtn");
-  const orientationInfo = document.getElementById("orientationInfo");
+  /* ==================== STEP 3: ORIENTAÇÃO ==================== */
+
+  const btnOrientation = document.getElementById("btn-orientation");
+  const infoOrientation = document.getElementById("orientation-info");
 
   function handleOrientation(e) {
-    if (e.beta !== null || e.gamma !== null) {
-      orientationInfo.textContent =
-        "✅ Orientação detectada. Teste concluído.";
-      setProgress(100);
-      window.removeEventListener("deviceorientation", handleOrientation);
-    }
+    infoOrientation.textContent = "✅ Movimento detectado. Teste concluído.";
+    step = 4;
+    progressBar.style.width = "100%";
+    window.removeEventListener("deviceorientation", handleOrientation);
   }
 
-  orientationBtn.addEventListener("click", () => {
+  btnOrientation.addEventListener("click", () => {
     if (
       typeof DeviceOrientationEvent !== "undefined" &&
       typeof DeviceOrientationEvent.requestPermission === "function"
@@ -97,4 +93,3 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 });
-``
