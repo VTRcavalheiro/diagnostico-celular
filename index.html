@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Diagnóstico do Celular</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -22,13 +22,13 @@
 
   <section class="card">
     <h2>🖐️ Teste de Touch Screen</h2>
-    <div id="touchArea">Toque aqui</div>
-    <p id="touchStatus"></p>
+    <div id="touchArea">Toque nesta área</div>
+    <p id="touchStatus">Aguardando interação...</p>
   </section>
 
   <section class="card">
     <h2>🔋 Status da Bateria</h2>
-    <div id="batteryInfo">Carregando...</div>
+    <div id="batteryInfo">Verificando...</div>
   </section>
 
   <section class="card">
@@ -39,14 +39,14 @@
 
   <section class="card">
     <h2>🧭 Teste de Orientação</h2>
-    <button onclick="initOrientation()">Ativar sensores</button>
-    <p id="orientationInfo">Aguardando permissão...</p>
+    <button id="orientationBtn">Ativar Sensores</button>
+    <p id="orientationInfo">Sensores inativos</p>
   </section>
 
 </main>
 
 <footer>
-  <p>© Ferramenta de Diagnóstico Web</p>
+  <p>Ferramenta Web de Diagnóstico</p>
 </footer>
 
 <script src="app.js"></script>
