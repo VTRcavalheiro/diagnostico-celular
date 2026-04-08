@@ -20,27 +20,20 @@
 
 <main>
 
-  <!-- TESTE 1: TOUCH -->
-  <section id="step-touch" class="card">
-    <h2>🖐️ Teste de Touch Screen</h2>
-    <p>Passe o dedo por todos os quadrados</p>
-    <div id="touch-grid"></div>
-    <p id="touch-info"></p>
-  </section>
+  <!-- TESTE TOUCH FULLSCREEN -->
+  <button id="startTouchTest">Iniciar Teste de Touch</button>
 
-  <!-- TESTE 2: VIBRAÇÃO -->
-  <section id="step-vibration" class="card hidden">
+  <div id="touch-fullscreen" class="hidden">
+    <p id="touch-instruction">Passe o dedo por toda a tela</p>
+    <div id="touch-grid"></div>
+  </div>
+
+  <!-- TESTE VIBRAÇÃO -->
+  <section id="test-vibration" class="card hidden">
     <h2>📳 Teste de Vibração</h2>
     <button id="btn-vibrate">Testar Vibração</button>
     <button id="btn-confirm-vibration" class="hidden">✅ Vibrou</button>
     <p id="vibration-info"></p>
-  </section>
-
-  <!-- TESTE 3: ORIENTAÇÃO -->
-  <section id="step-orientation" class="card hidden">
-    <h2>🧭 Teste de Orientação</h2>
-    <button id="btn-orientation">Ativar Sensores</button>
-    <p id="orientation-info"></p>
   </section>
 
 </main>
@@ -52,3 +45,4 @@
 <script src="app.js"></script>
 </body>
 </html>
+``
