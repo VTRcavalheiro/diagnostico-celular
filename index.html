@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Diagnóstico do Celular</title>
 
-  <link rel="stylesheet" href="style.css" />
+  <!-- ✅ CSS CORRETAMENTE CARREGADO -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -20,26 +21,16 @@
 
 <main>
 
-  <!-- BOTÃO INICIAL -->
+  <!-- TELA INICIAL -->
   <section class="card" id="start-screen">
-    <button onclick="startTouchTest()">
-      ▶ Iniciar Teste de Touch
-    </button>
+    <button id="startBtn">▶ Iniciar Teste de Touch</button>
   </section>
 
   <!-- TOUCH FULLSCREEN -->
   <div id="touch-fullscreen" class="hidden">
+    <p id="touch-instruction">Passe o dedo por TODA a tela</p>
     <div id="touch-grid"></div>
   </div>
-
-  <!-- VIBRAÇÃO -->
-  <section class="card hidden" id="test-vibration">
-    <h2>📳 Teste de Vibração</h2>
-    <button onclick="runVibration()">Testar Vibração</button>
-    <button id="confirmVibration" class="hidden" onclick="finishVibration()">
-      ✅ Vibrou
-    </button>
-  </section>
 
 </main>
 
@@ -47,6 +38,8 @@
   <p>Ferramenta Web de Diagnóstico</p>
 </footer>
 
+<!-- ✅ JS CORRETAMENTE CARREGADO -->
 <script src="app.js"></script>
+
 </body>
 </html>
