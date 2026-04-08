@@ -1,10 +1,6 @@
-/*
-  =============================
-  INFORMAÇÕES DO DISPOSITIVO
-  =============================
-*/
-const deviceInfoDiv = document.getElementById("deviceInfo");
-
+/* ===============================
+   INFORMAÇÕES DO DISPOSITIVO
+================================*/
 const deviceInfo = {
   "User Agent": navigator.userAgent,
   "Plataforma": navigator.platform,
@@ -13,15 +9,14 @@ const deviceInfo = {
   "Pixel Ratio": window.devicePixelRatio
 };
 
-deviceInfoDiv.innerHTML = Object.entries(deviceInfo)
-  .map(([k, v]) => `<p><strong>${k}:</strong> ${v}</p>`)
-  .join("");
+document.getElementById("deviceInfo").innerHTML =
+  Object.entries(deviceInfo)
+    .map(([k, v]) => `<p><strong>${k}:</strong> ${v}</p>`)
+    .join("");
 
-/*
-  =============================
-  TESTE DE TOUCH SCREEN
-  =============================
-*/
+/* ===============================
+   TESTE DE TOUCH SCREEN
+================================*/
 const touchArea = document.getElementById("touchArea");
 const touchStatus = document.getElementById("touchStatus");
 
@@ -37,71 +32,78 @@ touchArea.addEventListener("touchend", () => {
   touchStatus.textContent = "Toque finalizado";
 });
 
-/*
-  =============================
-  STATUS DA BATERIA
-  =============================
-*/
+/* ===============================
+   STATUS DA BATERIA
+================================*/
 const batteryInfo = document.getElementById("batteryInfo");
 
 if ("getBattery" in navigator) {
   navigator.getBattery().then(battery => {
-    function updateBattery() {
+    const update = () => {
       batteryInfo.innerHTML = `
         <p>Nível: ${Math.round(battery.level * 100)}%</p>
         <p>Carregando: ${battery.charging ? "Sim" : "Não"}</p>
       `;
-    }
-    updateBattery();
-    battery.addEventListener("levelchange", updateBattery);
-    battery.addEventListener("chargingchange", updateBattery);
+    };
+    update();
+    battery.addEventListener("levelchange", update);
+    battery.addEventListener("chargingchange", update);
   });
 } else {
-  batteryInfo.textContent = "API de bateria não suportada neste dispositivo.";
+  batteryInfo.textContent = "Informações de bateria não suportadas.";
 }
 
-/*
-  =============================
-  TESTE DE VIBRAÇÃO
-  =============================
-*/
-function vibrate() {
-  if ("vibrate" in navigator) {
-    navigator.vibrate([200, 100, 200]);
-  } else {
-    alert("Vibração não suportada.");
+/* ===============================
+   TESTE DE VIBRAÇÃO (CORRIGIDO)
+================================*/
+const vibrateBtn = document.getElementById("vibrateBtn");
+const vibrationStatus = document.getElementById("vibrationStatus");
+
+vibrateBtn.addEventListener("click", () => {
+  if (!("vibrate" in navigator)) {
+    vibrationStatus.textContent =
+      "Vibração não suportada neste navegador.";
+    return;
   }
-}
 
-/*
-  =============================
-  TESTE DE ORIENTAÇÃO
-  =============================
-*/
+  const result = navigator.vibrate([300, 150, 300]);
+
+  if (result) {
+    vibrationStatus.textContent =
+      "Comando de vibração enviado ✅";
+  } else {
+    vibrationStatus.textContent =
+      "API disponível, mas vibração foi ignorada ⚠️";
+  }
+});
+
+/* ===============================
+   TESTE DE ORIENTAÇÃO
+================================*/
+const orientationBtn = document.getElementById("orientationBtn");
 const orientationInfo = document.getElementById("orientationInfo");
 
-function initOrientation() {
-  if (typeof DeviceMotionEvent !== "undefined" &&
-      typeof DeviceMotionEvent.requestPermission === "function") {
-
+orientationBtn.addEventListener("click", () => {
+  if (
+    typeof DeviceMotionEvent !== "undefined" &&
+    typeof DeviceMotionEvent.requestPermission === "function"
+  ) {
     // iOS
-    DeviceMotionEvent.requestPermission()
-      .then(permission => {
-        if (permission === "granted") {
-          window.addEventListener("deviceorientation", handleOrientation);
-        }
-      });
-
+    DeviceMotionEvent.requestPermission().then(permission => {
+      if (permission === "granted") {
+        window.addEventListener("deviceorientation", handleOrientation);
+      }
+    });
   } else {
     // Android
     window.addEventListener("deviceorientation", handleOrientation);
   }
-}
+});
 
-function handleOrientation(event) {
+function handleOrientation(e) {
   orientationInfo.innerHTML = `
-    <p>Alpha: ${event.alpha?.toFixed(2)}</p>
-    <p>Beta: ${event.beta?.toFixed(2)}</p>
-    <p>Gamma: ${event.gamma?.toFixed(2)}</p>
+    <p>Alpha: ${e.alpha?.toFixed(1)}</p>
+    <p>Beta: ${e.beta?.toFixed(1)}</p>
+    <p>Gamma: ${e.gamma?.toFixed(1)}</p>
   `;
 }
