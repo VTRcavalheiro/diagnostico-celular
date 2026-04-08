@@ -5,17 +5,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const touchScreen = document.getElementById("touch-fullscreen");
   const grid = document.getElementById("touch-grid");
 
-  startBtn.addEventListener("click", () => {
+  startBtn.addEventListener("click", iniciarTouchTest);
+
+  function iniciarTouchTest() {
     startScreen.classList.add("hidden");
     touchScreen.classList.remove("hidden");
-    iniciarTouch();
-  });
 
-  function iniciarTouch() {
     const cols = 6;
     const rows = 10;
     const total = cols * rows;
-    let touched = 0;
+    let concluido = 0;
 
     grid.innerHTML = "";
 
@@ -23,20 +22,27 @@ document.addEventListener("DOMContentLoaded", () => {
       const cell = document.createElement("div");
       cell.className = "touch-cell";
 
-      cell.addEventListener("pointerdown", () => {
+      // ✅ USAR POINTERENTER (ESSA É A CHAVE)
+      cell.addEventListener("pointerenter", () => {
         if (!cell.classList.contains("done")) {
           cell.classList.add("done");
-          touched++;
+          concluido++;
 
-          if (touched === total) {
-            alert("✅ Teste de Touch concluído!");
-            touchScreen.classList.add("hidden");
+          if (concluido === total) {
+            finalizarTeste();
           }
         }
       });
 
       grid.appendChild(cell);
     }
+  }
+
+  function finalizarTeste() {
+    setTimeout(() => {
+      alert("✅ Teste de Touch concluído com sucesso");
+      touchScreen.classList.add("hidden");
+    }, 300);
   }
 
 });
