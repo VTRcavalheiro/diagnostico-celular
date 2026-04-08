@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Diagnóstico do Celular</title>
 
-  <!-- ✅ CSS CORRETAMENTE CARREGADO -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,33 +12,27 @@
 <header>
   <h1>Diagnóstico do Celular</h1>
   <p>Siga os testes passo a passo</p>
-
-  <div id="progress-container">
-    <div id="progress-bar"></div>
-  </div>
 </header>
 
 <main>
 
-  <!-- TELA INICIAL -->
+  <!-- START -->
   <section class="card" id="start-screen">
     <button id="startBtn">▶ Iniciar Teste de Touch</button>
   </section>
 
   <!-- TOUCH FULLSCREEN -->
   <div id="touch-fullscreen" class="hidden">
-    <p id="touch-instruction">Passe o dedo por TODA a tela</p>
+    <div id="touch-instruction">Passe o dedo por TODA a tela</div>
     <div id="touch-grid"></div>
   </div>
 
 </main>
 
 <footer>
-  <p>Ferramenta Web de Diagnóstico</p>
+  Ferramenta Web de Diagnóstico
 </footer>
 
-<!-- ✅ JS CORRETAMENTE CARREGADO -->
 <script src="app.js"></script>
-
 </body>
 </html>
