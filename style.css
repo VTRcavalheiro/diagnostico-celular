@@ -10,9 +10,9 @@ body {
 }
 
 header {
-  background-color: #020617;
-  padding: 20px;
   text-align: center;
+  padding: 20px;
+  background-color: #020617;
 }
 
 main {
@@ -24,7 +24,7 @@ main {
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 16px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 #touchArea {
@@ -32,15 +32,15 @@ main {
   border: 2px dashed #22c55e;
   border-radius: 8px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
+
 button {
   width: 100%;
   padding: 12px;
-  font-size: 16px;
-  background-color: #22c55e;
-  border: none;
   border-radius: 8px;
+  border: none;
+  background: #22c55e;
+  color: #000;
 }
-``
