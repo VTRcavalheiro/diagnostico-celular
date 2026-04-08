@@ -1,56 +1,42 @@
-let touched = 0;
-let total = 60;
+document.addEventListener("DOMContentLoaded", () => {
 
-const progressBar = document.getElementById("progress-bar");
-const grid = document.getElementById("touch-grid");
+  const startBtn = document.getElementById("startBtn");
+  const startScreen = document.getElementById("start-screen");
+  const touchScreen = document.getElementById("touch-fullscreen");
+  const grid = document.getElementById("touch-grid");
 
-function setProgress(p) {
-  progressBar.style.width = p + "%";
-}
+  startBtn.addEventListener("click", () => {
+    startScreen.classList.add("hidden");
+    touchScreen.classList.remove("hidden");
+    iniciarTouch();
+  });
 
-/* ========= TOUCH TEST ========= */
-function startTouchTest() {
-  document.getElementById("start-screen").classList.add("hidden");
-  document.getElementById("touch-fullscreen").classList.remove("hidden");
+  function iniciarTouch() {
+    const cols = 6;
+    const rows = 10;
+    const total = cols * rows;
+    let touched = 0;
 
-  grid.innerHTML = "";
-  touched = 0;
-  setProgress(0);
+    grid.innerHTML = "";
 
-  for (let i = 0; i < total; i++) {
-    const cell = document.createElement("div");
-    cell.className = "touch-cell";
+    for (let i = 0; i < total; i++) {
+      const cell = document.createElement("div");
+      cell.className = "touch-cell";
 
-    cell.addEventListener("pointerdown", () => {
-      if (!cell.classList.contains("done")) {
-        cell.classList.add("done");
-        touched++;
+      cell.addEventListener("pointerdown", () => {
+        if (!cell.classList.contains("done")) {
+          cell.classList.add("done");
+          touched++;
 
-        setProgress((touched / total) * 50);
-
-        if (touched === total) {
-          document.getElementById("touch-fullscreen").classList.add("hidden");
-          document.getElementById("test-vibration").classList.remove("hidden");
+          if (touched === total) {
+            alert("✅ Teste de Touch concluído!");
+            touchScreen.classList.add("hidden");
+          }
         }
-      }
-    });
+      });
 
-    grid.appendChild(cell);
+      grid.appendChild(cell);
+    }
   }
-}
 
-/* ========= VIBRATION ========= */
-function runVibration() {
-  if ("vibrate" in navigator) {
-    navigator.vibrate([250, 150, 250]);
-    document.getElementById("confirmVibration").classList.remove("hidden");
-  } else {
-    alert("Vibração não suportada neste dispositivo");
-  }
-}
-
-function finishVibration() {
-  setProgress(100);
-  alert("✅ Diagnóstico concluído");
-}
-``
+});
