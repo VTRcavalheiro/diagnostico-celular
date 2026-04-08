@@ -10,22 +10,20 @@ body {
 }
 
 header {
-  padding: 20px;
-  background: #020617;
+  padding: 16px;
   text-align: center;
+  background: #020617;
 }
 
 #progress-container {
-  margin-top: 12px;
-  height: 8px;
+  height: 6px;
   background: #1e293b;
-  border-radius: 4px;
-  overflow: hidden;
+  margin-top: 10px;
 }
 
 #progress-bar {
-  width: 0%;
   height: 100%;
+  width: 0%;
   background: #22c55e;
   transition: width 0.3s ease;
 }
@@ -38,24 +36,41 @@ main {
   background: #020617;
   padding: 16px;
   border-radius: 12px;
-  margin-bottom: 16px;
 }
 
-.hidden {
-  display: none;
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 12px;
+  font-size: 16px;
+  background: #22c55e;
+  border: none;
+  border-radius: 8px;
+  color: #000;
+}
+
+/* FULLSCREEN TOUCH */
+#touch-fullscreen {
+  position: fixed;
+  inset: 0;
+  background: #020617;
+  z-index: 999;
+}
+
+#touch-instruction {
+  text-align: center;
+  padding: 10px;
 }
 
 #touch-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin-top: 16px;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  height: calc(100vh - 40px);
 }
 
 .touch-cell {
-  height: 60px;
-  background: #1e293b;
-  border-radius: 6px;
+  border: 1px solid #334155;
   touch-action: none;
 }
 
@@ -63,13 +78,6 @@ main {
   background: #22c55e;
 }
 
-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  background: #22c55e;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  color: #000;
+.hidden {
+  display: none;
 }
