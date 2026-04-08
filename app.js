@@ -1,36 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ===============================
-     CONTROLE DE FLUXO
-  ================================*/
-  function showTest(id) {
-    document.querySelectorAll(".card").forEach(c => c.classList.add("hidden"));
-    document.getElementById(id).classList.remove("hidden");
+  /* ===== PROGRESSO ===== */
+  const progressBar = document.getElementById("progressBar");
+  function setProgress(percent) {
+    progressBar.style.width = percent + "%";
   }
 
-  /* ===============================
-     TESTE 1 - TOUCH SCREEN
-  ================================*/
+  /* =============================
+     TESTE 1 — TOUCH
+  ==============================*/
   const grid = document.getElementById("touchGrid");
-  const remainingSpan = document.getElementById("remaining");
+  const touchInfo = document.getElementById("touchInfo");
 
-  const TOTAL = 16;
-  let remaining = TOTAL;
-  remainingSpan.textContent = remaining;
+  let totalCells = 16;
+  let touchedCells = 0;
 
-  for (let i = 0; i < TOTAL; i++) {
+  for (let i = 0; i < totalCells; i++) {
     const cell = document.createElement("div");
     cell.className = "touch-cell";
 
     cell.addEventListener("pointerdown", () => {
-      if (!cell.classList.contains("touched")) {
-        cell.classList.add("touched");
-        remaining--;
-        remainingSpan.textContent = remaining;
+      if (!cell.classList.contains("done")) {
+        cell.classList.add("done");
+        touchedCells++;
+        touchInfo.textContent =
+          `Restantes: ${totalCells - touchedCells}`;
 
-        if (remaining === 0) {
+        if (touchedCells === totalCells) {
+          setProgress(33);
           setTimeout(() => {
-            showTest("test-vibration");
+            document.getElementById("test-touch").classList.add("hidden");
+            document.getElementById("test-vibration").classList.remove("hidden");
           }, 500);
         }
       }
@@ -39,63 +39,62 @@ document.addEventListener("DOMContentLoaded", () => {
     grid.appendChild(cell);
   }
 
-  /* ===============================
-     TESTE 2 - VIBRAÇÃO
-  ================================*/
+  touchInfo.textContent = `Restantes: ${totalCells}`;
+
+  /* =============================
+     TESTE 2 — VIBRAÇÃO
+  ==============================*/
   const vibrateBtn = document.getElementById("vibrateBtn");
-  const vibrationStatus = document.getElementById("vibrationStatus");
+  const confirmVibration = document.getElementById("confirmVibration");
+  const vibrationInfo = document.getElementById("vibrationInfo");
 
   vibrateBtn.addEventListener("click", () => {
-    let vibrou = false;
-
     if ("vibrate" in navigator) {
-      vibrou = navigator.vibrate([200, 100, 200]);
+      navigator.vibrate([200, 100, 200]);
+      vibrationInfo.textContent =
+        "Se o aparelho vibrou, confirme abaixo.";
+      confirmVibration.classList.remove("hidden");
+    } else {
+      vibrationInfo.textContent =
+        "Vibração não suportada neste dispositivo.";
     }
-
-    if (!("vibrate" in navigator)) {
-      vibrationStatus.textContent =
-        "❌ Vibração não suportada neste dispositivo.";
-      return;
-    }
-
-    vibrationStatus.textContent = vibrou
-      ? "✅ Vibração executada com sucesso."
-      : "⚠️ Vibração solicitada, mas ignorada pelo sistema.";
-
-    setTimeout(() => {
-      showTest("test-orientation");
-    }, 1000);
   });
 
-  /* ===============================
-     TESTE 3 - ORIENTAÇÃO
-  ================================*/
+  confirmVibration.addEventListener("click", () => {
+    setProgress(66);
+    document.getElementById("test-vibration").classList.add("hidden");
+    document.getElementById("test-orientation").classList.remove("hidden");
+  });
+
+  /* =============================
+     TESTE 3 — ORIENTAÇÃO
+  ==============================*/
   const orientationBtn = document.getElementById("orientationBtn");
   const orientationInfo = document.getElementById("orientationInfo");
 
-  orientationBtn.addEventListener("click", () => {
-
-    function handle(e) {
-      orientationInfo.innerHTML = `
-        <p>Alpha: ${e.alpha?.toFixed(1)}</p>
-        <p>Beta: ${e.beta?.toFixed(1)}</p>
-        <p>Gamma: ${e.gamma?.toFixed(1)}</p>
-        <p>✅ Teste concluído</p>
-      `;
+  function handleOrientation(e) {
+    if (e.beta !== null || e.gamma !== null) {
+      orientationInfo.textContent =
+        "✅ Orientação detectada. Teste concluído.";
+      setProgress(100);
+      window.removeEventListener("deviceorientation", handleOrientation);
     }
+  }
 
+  orientationBtn.addEventListener("click", () => {
     if (
       typeof DeviceOrientationEvent !== "undefined" &&
       typeof DeviceOrientationEvent.requestPermission === "function"
     ) {
       DeviceOrientationEvent.requestPermission().then(p => {
         if (p === "granted") {
-          window.addEventListener("deviceorientation", handle);
+          window.addEventListener("deviceorientation", handleOrientation);
         }
       });
     } else {
-      window.addEventListener("deviceorientation", handle);
+      window.addEventListener("deviceorientation", handleOrientation);
     }
   });
 
 });
+``
