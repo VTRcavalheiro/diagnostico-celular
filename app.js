@@ -1,28 +1,75 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ===== INFO DISPOSITIVO ===== */
-  document.getElementById("deviceInfo").innerHTML = `
-    <p>${navigator.userAgent}</p>
-    <p>Resolução: ${screen.width} x ${screen.height}</p>
-  `;
+  /* ===============================
+     CONTROLE DE FLUXO
+  ================================*/
+  function showTest(id) {
+    document.querySelectorAll(".card").forEach(c => c.classList.add("hidden"));
+    document.getElementById(id).classList.remove("hidden");
+  }
 
-  /* ===== VIBRAÇÃO ===== */
+  /* ===============================
+     TESTE 1 - TOUCH SCREEN
+  ================================*/
+  const grid = document.getElementById("touchGrid");
+  const remainingSpan = document.getElementById("remaining");
+
+  const TOTAL = 16;
+  let remaining = TOTAL;
+  remainingSpan.textContent = remaining;
+
+  for (let i = 0; i < TOTAL; i++) {
+    const cell = document.createElement("div");
+    cell.className = "touch-cell";
+
+    cell.addEventListener("pointerdown", () => {
+      if (!cell.classList.contains("touched")) {
+        cell.classList.add("touched");
+        remaining--;
+        remainingSpan.textContent = remaining;
+
+        if (remaining === 0) {
+          setTimeout(() => {
+            showTest("test-vibration");
+          }, 500);
+        }
+      }
+    });
+
+    grid.appendChild(cell);
+  }
+
+  /* ===============================
+     TESTE 2 - VIBRAÇÃO
+  ================================*/
   const vibrateBtn = document.getElementById("vibrateBtn");
   const vibrationStatus = document.getElementById("vibrationStatus");
 
   vibrateBtn.addEventListener("click", () => {
-    vibrationStatus.textContent = "Executando teste...";
+    let vibrou = false;
+
+    if ("vibrate" in navigator) {
+      vibrou = navigator.vibrate([200, 100, 200]);
+    }
 
     if (!("vibrate" in navigator)) {
-      vibrationStatus.textContent = "Vibração não suportada ❌";
+      vibrationStatus.textContent =
+        "❌ Vibração não suportada neste dispositivo.";
       return;
     }
 
-    navigator.vibrate([300,150,300]);
-    vibrationStatus.textContent = "✅ Vibração acionada";
+    vibrationStatus.textContent = vibrou
+      ? "✅ Vibração executada com sucesso."
+      : "⚠️ Vibração solicitada, mas ignorada pelo sistema.";
+
+    setTimeout(() => {
+      showTest("test-orientation");
+    }, 1000);
   });
 
-  /* ===== ORIENTAÇÃO ===== */
+  /* ===============================
+     TESTE 3 - ORIENTAÇÃO
+  ================================*/
   const orientationBtn = document.getElementById("orientationBtn");
   const orientationInfo = document.getElementById("orientationInfo");
 
@@ -30,9 +77,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function handle(e) {
       orientationInfo.innerHTML = `
-        <p>Alpha: ${e.alpha}</p>
-        <p>Beta: ${e.beta}</p>
-        <p>Gamma: ${e.gamma}</p>
+        <p>Alpha: ${e.alpha?.toFixed(1)}</p>
+        <p>Beta: ${e.beta?.toFixed(1)}</p>
+        <p>Gamma: ${e.gamma?.toFixed(1)}</p>
+        <p>✅ Teste concluído</p>
       `;
     }
 
