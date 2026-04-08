@@ -5,6 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const touchScreen = document.getElementById("touch-fullscreen");
   const grid = document.getElementById("touch-grid");
 
+  const vibrationScreen = document.getElementById("vibration-screen");
+  const vibrateBtn = document.getElementById("vibrateBtn");
+  const confirmBtn = document.getElementById("confirmVibration");
+  const vibrationInfo = document.getElementById("vibration-info");
+
+  /* =============================
+     TESTE DE TOUCH (FULLSCREEN)
+  ==============================*/
   startBtn.addEventListener("click", iniciarTouchTest);
 
   function iniciarTouchTest() {
@@ -22,14 +30,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const cell = document.createElement("div");
       cell.className = "touch-cell";
 
-      // ✅ USAR POINTERENTER (ESSA É A CHAVE)
+      // USO CORRETO PARA DRAG
       cell.addEventListener("pointerenter", () => {
         if (!cell.classList.contains("done")) {
           cell.classList.add("done");
           concluido++;
 
           if (concluido === total) {
-            finalizarTeste();
+            finalizarTouchTest();
           }
         }
       });
@@ -38,11 +46,35 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function finalizarTeste() {
+  function finalizarTouchTest() {
     setTimeout(() => {
-      alert("✅ Teste de Touch concluído com sucesso");
       touchScreen.classList.add("hidden");
+      vibrationScreen.classList.remove("hidden");
     }, 300);
   }
 
+  /* =============================
+     TESTE DE VIBRAÇÃO
+  ==============================*/
+  vibrateBtn.addEventListener("click", () => {
+
+    // Vibração DEVE acontecer dentro do clique
+    if ("vibrate" in navigator) {
+      navigator.vibrate([300, 200, 300]);
+      vibrationInfo.textContent =
+        "Se o celular vibrou, confirme abaixo.";
+      confirmBtn.classList.remove("hidden");
+    } else {
+      vibrationInfo.textContent =
+        "Vibração não suportada neste dispositivo.";
+    }
+  });
+
+  confirmBtn.addEventListener("click", () => {
+    vibrationInfo.textContent =
+      "✅ Teste de vibração concluído com sucesso.";
+    confirmBtn.disabled = true;
+  });
+
 });
+``
