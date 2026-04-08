@@ -11,12 +11,11 @@ body {
 
 header {
   padding: 16px;
-  text-align: center;
   background: #020617;
+  text-align: center;
 }
 
 #progress-container {
-  width: 100%;
   height: 6px;
   background: #1e293b;
   margin-top: 10px;
@@ -26,7 +25,6 @@ header {
   height: 100%;
   width: 0%;
   background: #22c55e;
-  transition: width 0.3s;
 }
 
 main {
@@ -58,7 +56,12 @@ button {
   position: fixed;
   inset: 0;
   background: #020617;
-  z-index: 1000;
+  z-index: 999;
+}
+
+#touch-instruction {
+  text-align: center;
+  padding: 10px;
 }
 
 #touch-grid {
@@ -66,7 +69,7 @@ button {
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(10, 1fr);
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 40px);
 }
 
 .touch-cell {
