@@ -1,58 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Diagnóstico do Celular</title>
 
-  <!-- ✅ CSS CORRETAMENTE CARREGADO -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
   <h1>Diagnóstico do Celular</h1>
-  <p>Ferramenta Web de Diagnóstico</p>
+  <p>Siga os testes passo a passo</p>
 </header>
 
 <main>
 
-  <section class="card">
-    <h2>📱 Informações do Dispositivo</h2>
-    <div id="deviceInfo"></div>
-  </section>
-
-  <section class="card">
+  <!-- TESTE 1 - TOUCH -->
+  <section class="card active" id="test-touch">
     <h2>🖐️ Teste de Touch Screen</h2>
-    <div id="touchArea">Toque nesta área</div>
-    <p id="touchStatus">Aguardando interação...</p>
+    <p>Deslize o dedo por todos os quadrados</p>
+
+    <div id="touchGrid"></div>
+
+    <p id="touchStatus">
+      Restantes: <strong><span id="remaining">0</span></strong>
+    </p>
   </section>
 
-  <section class="card">
-    <h2>🔋 Status da Bateria</h2>
-    <div id="batteryInfo">Verificando...</div>
-  </section>
-
-  <section class="card">
+  <!-- TESTE 2 - VIBRAÇÃO -->
+  <section class="card hidden" id="test-vibration">
     <h2>📳 Teste de Vibração</h2>
-    <button id="vibrateBtn">Testar Vibração</button>
-    <p id="vibrationStatus">Aguardando teste...</p>
+    <button id="vibrateBtn">Iniciar teste de vibração</button>
+    <p id="vibrationStatus">Aguardando ação...</p>
   </section>
 
-  <section class="card">
+  <!-- TESTE 3 - ORIENTAÇÃO -->
+  <section class="card hidden" id="test-orientation">
     <h2>🧭 Teste de Orientação</h2>
-    <button id="orientationBtn">Ativar Sensores</button>
-    <p id="orientationInfo">Sensores inativos</p>
+    <button id="orientationBtn">Ativar sensores</button>
+    <p id="orientationInfo">Aguardando movimento...</p>
   </section>
 
 </main>
 
 <footer>
-  <p>Ferramenta Web de Diagnóstico</p>
+  <p>Diagnóstico Web Guiado</p>
 </footer>
 
-<!-- ✅ JS CORRETAMENTE CARREGADO -->
 <script src="app.js"></script>
-
 </body>
 </html>
