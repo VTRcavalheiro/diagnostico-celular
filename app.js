@@ -1,6 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ================= VIBRAÇÃO ================= */
+  /* ===== INFO DISPOSITIVO ===== */
+  document.getElementById("deviceInfo").innerHTML = `
+    <p>${navigator.userAgent}</p>
+    <p>Resolução: ${screen.width} x ${screen.height}</p>
+  `;
+
+  /* ===== VIBRAÇÃO ===== */
   const vibrateBtn = document.getElementById("vibrateBtn");
   const vibrationStatus = document.getElementById("vibrationStatus");
 
@@ -8,23 +14,21 @@ document.addEventListener("DOMContentLoaded", () => {
     vibrationStatus.textContent = "Executando teste...";
 
     if (!("vibrate" in navigator)) {
-      vibrationStatus.textContent =
-        "Vibração não suportada neste navegador ❌";
+      vibrationStatus.textContent = "Vibração não suportada ❌";
       return;
     }
 
-    navigator.vibrate([300, 200, 300]);
-    vibrationStatus.textContent =
-      "Comando de vibração enviado ✅";
+    navigator.vibrate([300,150,300]);
+    vibrationStatus.textContent = "✅ Vibração acionada";
   });
 
-  /* ================= ORIENTAÇÃO ================= */
+  /* ===== ORIENTAÇÃO ===== */
   const orientationBtn = document.getElementById("orientationBtn");
   const orientationInfo = document.getElementById("orientationInfo");
 
   orientationBtn.addEventListener("click", () => {
 
-    function handleOrientation(e) {
+    function handle(e) {
       orientationInfo.innerHTML = `
         <p>Alpha: ${e.alpha}</p>
         <p>Beta: ${e.beta}</p>
@@ -36,16 +40,13 @@ document.addEventListener("DOMContentLoaded", () => {
       typeof DeviceOrientationEvent !== "undefined" &&
       typeof DeviceOrientationEvent.requestPermission === "function"
     ) {
-      // iOS
-      DeviceOrientationEvent.requestPermission()
-        .then(permission => {
-          if (permission === "granted") {
-            window.addEventListener("deviceorientation", handleOrientation);
-          }
-        });
+      DeviceOrientationEvent.requestPermission().then(p => {
+        if (p === "granted") {
+          window.addEventListener("deviceorientation", handle);
+        }
+      });
     } else {
-      // Android
-      window.addEventListener("deviceorientation", handleOrientation);
+      window.addEventListener("deviceorientation", handle);
     }
   });
 
